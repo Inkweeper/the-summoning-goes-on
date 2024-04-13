@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=3 uid="uid://st1dllpjhu3u"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k0dfp"]
+[ext_resource type="Texture2D" uid="uid://dq1xhi4mp2fhp" path="res://aspws/player/player.png" id="2_lqok1"]
+[ext_resource type="Script" path="res://scenes/player/PlayerStatemachine.gd" id="3_dtkyu"]
+[ext_resource type="Script" path="res://scenes/player/Idle.gd" id="4_tc5sw"]
+[ext_resource type="Script" path="res://scenes/player/Walking.gd" id="5_87a7h"]
+[ext_resource type="Script" path="res://scenes/player/Dying.gd" id="6_1dcv3"]
+[ext_resource type="Script" path="res://scenes/player/Teleported.gd" id="7_0gsi2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylp8i"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8idx5"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewg6q"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0s636"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipgxk"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ql1r"]
+atlas = ExtResource("2_lqok1")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_atolp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylp8i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8idx5")
+}],
+"loop": true,
+"name": &"dying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewg6q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0s636")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipgxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ql1r")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g1ttt"]
+radius = 8.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_k0dfp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_atolp")
+animation = &"walking"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g1ttt")
+
+[node name="PlayerStatemachine" type="Node" parent="." node_paths=PackedStringArray("player", "currentState")]
+script = ExtResource("3_dtkyu")
+player = NodePath("..")
+currentState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="PlayerStatemachine" node_paths=PackedStringArray("player")]
+script = ExtResource("4_tc5sw")
+player = NodePath("../..")
+
+[node name="Walking" type="Node" parent="PlayerStatemachine" node_paths=PackedStringArray("player")]
+script = ExtResource("5_87a7h")
+player = NodePath("../..")
+
+[node name="Dying" type="Node" parent="PlayerStatemachine" node_paths=PackedStringArray("player")]
+script = ExtResource("6_1dcv3")
+player = NodePath("../..")
+
+[node name="Teleported" type="Node" parent="PlayerStatemachine" node_paths=PackedStringArray("player")]
+script = ExtResource("7_0gsi2")
+player = NodePath("../..")

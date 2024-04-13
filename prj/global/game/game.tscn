@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://blib5huuovhvj"]
+
+[ext_resource type="Script" path="res://global/game/game.gd" id="1_06v20"]
+[ext_resource type="Script" path="res://components/statemachine/Statemachine.gd" id="2_fya6r"]
+[ext_resource type="Script" path="res://global/game/Running.gd" id="3_6mbby"]
+[ext_resource type="Script" path="res://global/game/NotRunning.gd" id="4_nj4gq"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_06v20")
+
+[node name="Statemachine" type="Node" parent="." node_paths=PackedStringArray("currentState")]
+script = ExtResource("2_fya6r")
+currentState = NodePath("NotRunning")
+
+[node name="Running" type="Node" parent="Statemachine"]
+script = ExtResource("3_6mbby")
+
+[node name="NotRunning" type="Node" parent="Statemachine"]
+script = ExtResource("4_nj4gq")
