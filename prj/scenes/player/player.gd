@@ -10,6 +10,10 @@ signal player_teleported
 @export var friction:float = 500
 @export var air_friction_para:float=0.01
 
+func _ready() -> void:
+	Game.starved_to_death.connect(starved_to_death)
+	Game.teleported_away.connect(teleported)
+
 func move(delta:float,v_para:float) -> void:
 	velocity += Vector2(Input.get_axis("a","d"),Input.get_axis("w","s")).normalized()*v_para*acc*delta
 	velocity = velocity.move_toward(Vector2.ZERO,(friction+air_friction_para*pow(velocity.length(),2))*delta)

@@ -13,5 +13,5 @@ func physics_update(delta:float):
 	super.physics_update(delta)
 	game.game_physics_tick(delta)
 
-func _on_game_game_over():
+func _on_game_game_over(_reason:int):
 	transitioned.emit(self,"NotRunning")

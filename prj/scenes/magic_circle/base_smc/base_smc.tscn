@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://bx2k3pixbpi6o"]
+
+[ext_resource type="Script" path="res://scenes/magic_circle/base_smc/base_smc.gd" id="1_heqty"]
+[ext_resource type="Script" path="res://components/statemachine/Statemachine.gd" id="2_h8ht3"]
+[ext_resource type="Script" path="res://scenes/magic_circle/base_smc/Generating.gd" id="3_eipmq"]
+[ext_resource type="Script" path="res://scenes/magic_circle/base_smc/Idle.gd" id="4_6iohp"]
+
+[sub_resource type="Animation" id="Animation_iln3y"]
+resource_name = "tiggered"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wecsx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ne31"]
+_data = {
+"RESET": SubResource("Animation_wecsx"),
+"tiggered": SubResource("Animation_iln3y")
+}
+
+[node name="BaseSmc" type="Area2D"]
+script = ExtResource("1_heqty")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1ne31")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Statemachine" type="Node" parent="." node_paths=PackedStringArray("currentState")]
+script = ExtResource("2_h8ht3")
+currentState = NodePath("Generating")
+
+[node name="Generating" type="Node" parent="Statemachine" node_paths=PackedStringArray("smc")]
+script = ExtResource("3_eipmq")
+smc = NodePath("../..")
+
+[node name="Idle" type="Node" parent="Statemachine" node_paths=PackedStringArray("smc")]
+script = ExtResource("4_6iohp")
+smc = NodePath("../..")

@@ -7,3 +7,7 @@ func _ready() -> void:
 
 func _on_game_new_game_start():
 	transitioned.emit(self,"Running")
+
+func enter():
+	super.enter()
+	print("game now not running")
