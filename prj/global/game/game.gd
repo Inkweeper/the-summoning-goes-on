@@ -25,8 +25,11 @@ var satiety:float=50:
 var satiety_decrease:float=1
 var satiety_can_decrease:bool=false
 
+var end_reason:int=0
+
 func _ready() -> void:
 	offering_collected.connect(_on_offering_collected)
+	game_over.connect(_on_game_over)
 
 func new_game():
 	SoundManager.play_music_loop("res://asoundws/Song.mp3")
@@ -36,6 +39,7 @@ func new_game():
 	satiety=50
 	satiety_decrease=1
 	satiety_can_decrease=true
+	end_reason=0
 
 func game_physics_tick(delta:float):
 	if satiety_can_decrease:
@@ -52,6 +56,10 @@ func _on_offering_collected(type_name:String,satiety_recovered:float):
 		satiety+=satiety_recovered
 	else:
 		eraser_record+=1
+
+func _on_game_over(reason:int):
+	end_reason=reason
+	SceneChangerDark.change_scene("res://scenes/ending_interface/ending_interface.tscn")
 
 func chaser_activate(node:Node):
 	for i in range(3):

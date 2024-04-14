@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="The Summoning Goes On"
+run/main_scene="res://scenes/starting_interface/starting_interface.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/bg_color=Color(0.501961, 0.305882, 0.27451, 1)
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=300
 
 [autoload]
 
 Game="*res://global/game/game.tscn"
 ScenePool="*res://global/scene_pool/scene_pool.tscn"
 SoundManager="*res://global/sound_manager/SoundManager.tscn"
+SceneChangerDark="*res://global/scene_changer_dark/scene_changer_dark.tscn"
 
 [display]
 
