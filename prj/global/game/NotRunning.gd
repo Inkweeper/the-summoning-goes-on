@@ -10,4 +10,4 @@ func _on_game_new_game_start():
 
 func enter():
 	super.enter()
-	print("game now not running")
+	#print("game now not running")

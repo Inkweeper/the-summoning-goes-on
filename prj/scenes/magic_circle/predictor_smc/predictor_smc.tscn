@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://cjjvjjyjut131"]
+
+[ext_resource type="PackedScene" uid="uid://bx2k3pixbpi6o" path="res://scenes/magic_circle/base_smc/base_smc.tscn" id="1_qu88d"]
+[ext_resource type="Script" path="res://scenes/magic_circle/predictor_smc/predictor_smc.gd" id="2_xf71q"]
+[ext_resource type="Texture2D" uid="uid://d4gfuvi3ir30k" path="res://aspws/magic_circle/magic_circle.png" id="3_d0dv8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dt3aa"]
+atlas = ExtResource("3_d0dv8")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36uc2"]
+atlas = ExtResource("3_d0dv8")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clm3i"]
+atlas = ExtResource("3_d0dv8")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6g1ya"]
+atlas = ExtResource("3_d0dv8")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk8bc"]
+atlas = ExtResource("3_d0dv8")
+region = Rect2(280, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xf263"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dt3aa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36uc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_clm3i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6g1ya")
+}],
+"loop": false,
+"name": &"generating",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kk8bc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r66jv"]
+radius = 19.0
+
+[node name="PredictorSmc" instance=ExtResource("1_qu88d")]
+script = ExtResource("2_xf71q")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+clip_children = 2
+sprite_frames = SubResource("SpriteFrames_xf263")
+animation = &"idle"
+autoplay = "generating"
+
+[node name="ColorRect" type="ColorRect" parent="AnimatedSprite2D" index="0"]
+offset_left = -25.0
+offset_top = -23.0
+offset_right = 26.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.392157, 0, 1, 0.72549)
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_r66jv")

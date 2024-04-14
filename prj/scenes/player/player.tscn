@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://st1dllpjhu3u"]
+[gd_scene load_steps=17 format=3 uid="uid://st1dllpjhu3u"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_k0dfp"]
 [ext_resource type="Texture2D" uid="uid://dq1xhi4mp2fhp" path="res://aspws/player/player.png" id="2_lqok1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scenes/player/Walking.gd" id="5_87a7h"]
 [ext_resource type="Script" path="res://scenes/player/Dying.gd" id="6_1dcv3"]
 [ext_resource type="Script" path="res://scenes/player/Teleported.gd" id="7_0gsi2"]
+[ext_resource type="AudioStream" uid="uid://cdv38kie8j34j" path="res://asoundws/eat.mp3" id="8_dgac0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ylp8i"]
 atlas = ExtResource("2_lqok1")
@@ -69,9 +70,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g1ttt"]
-radius = 8.0
+radius = 7.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+z_index = 1
 script = ExtResource("1_k0dfp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -102,3 +104,6 @@ player = NodePath("../..")
 [node name="Teleported" type="Node" parent="PlayerStatemachine" node_paths=PackedStringArray("player")]
 script = ExtResource("7_0gsi2")
 player = NodePath("../..")
+
+[node name="EatSE" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_dgac0")

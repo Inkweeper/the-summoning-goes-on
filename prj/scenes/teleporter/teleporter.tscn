@@ -1,0 +1,151 @@
+[gd_scene load_steps=15 format=3 uid="uid://b5dtxy5dthoff"]
+
+[ext_resource type="Script" path="res://scenes/teleporter/teleporter.gd" id="1_wi7im"]
+[ext_resource type="Texture2D" uid="uid://cuwxg63myjqvr" path="res://aspws/teleporter/teleporter.png" id="2_bsjli"]
+[ext_resource type="AudioStream" uid="uid://bsaq5mpq1d7yq" path="res://asoundws/pew,laser gun.wav" id="3_oxi3o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_howsv"]
+atlas = ExtResource("2_bsjli")
+region = Rect2(0, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df52y"]
+atlas = ExtResource("2_bsjli")
+region = Rect2(40, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s861f"]
+atlas = ExtResource("2_bsjli")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tdkr"]
+atlas = ExtResource("2_bsjli")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ni30g"]
+atlas = ExtResource("2_bsjli")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6ofm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_howsv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_df52y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s861f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tdkr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ni30g")
+}],
+"loop": false,
+"name": &"disappearing",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_sphjh"]
+resource_name = "ticking"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_ticking_end"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0hx2i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbmwb"]
+_data = {
+"RESET": SubResource("Animation_0hx2i"),
+"ticking": SubResource("Animation_sphjh")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iaab7"]
+radius = 11.0
+
+[sub_resource type="Curve" id="Curve_jiucx"]
+_data = [Vector2(0, 0.198191), 0.0, 0.0, 0, 0, Vector2(0.496063, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="Teleporter" type="Area2D"]
+script = ExtResource("1_wi7im")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q6ofm")
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fbmwb")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_iaab7")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 64
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.3
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+angular_velocity_max = 720.0
+orbit_velocity_min = 0.1
+orbit_velocity_max = 0.3
+scale_amount_curve = SubResource("Curve_jiucx")
+color = Color(0, 0, 0, 0.627451)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.12
+one_shot = true
+
+[node name="Pew" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oxi3o")
+volume_db = -20.0

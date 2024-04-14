@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://bb5xcv5d2ms6p"]
+
+[ext_resource type="PackedScene" uid="uid://st1dllpjhu3u" path="res://scenes/player/player.tscn" id="1_2tmot"]
+[ext_resource type="PackedScene" uid="uid://cjjvjjyjut131" path="res://scenes/magic_circle/predictor_smc/predictor_smc.tscn" id="2_puwoe"]
+[ext_resource type="PackedScene" uid="uid://k1u2w7mg42yg" path="res://scenes/magic_circle/circular_array_smc/circular_array_smc.tscn" id="3_sinll"]
+[ext_resource type="PackedScene" uid="uid://bj70w8fedmvbs" path="res://scenes/magic_circle/random_smc/random_smc.tscn" id="4_j46va"]
+[ext_resource type="PackedScene" uid="uid://00c1mn33rh4" path="res://scenes/magic_circle/normal_smc/normal_smc.tscn" id="5_gkhb4"]
+[ext_resource type="PackedScene" uid="uid://bfr6wwng4e4ds" path="res://scenes/magic_circle/chaser_smc/chaser_smc.tscn" id="6_skjkx"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_2tmot")]
+position = Vector2(66, 64)
+
+[node name="PredictorSmc" parent="." instance=ExtResource("2_puwoe")]
+position = Vector2(264, 104)
+
+[node name="CircularArraySmc" parent="." instance=ExtResource("3_sinll")]
+position = Vector2(314, 185)
+
+[node name="RandomSmc" parent="." instance=ExtResource("4_j46va")]
+position = Vector2(215, 247)
+
+[node name="NormalSmc" parent="." instance=ExtResource("5_gkhb4")]
+position = Vector2(89, 237)
+
+[node name="ChaserSmc" parent="." instance=ExtResource("6_skjkx")]
+position = Vector2(151, 136)

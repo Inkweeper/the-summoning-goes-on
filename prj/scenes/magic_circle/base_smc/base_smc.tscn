@@ -5,28 +5,12 @@
 [ext_resource type="Script" path="res://scenes/magic_circle/base_smc/Generating.gd" id="3_eipmq"]
 [ext_resource type="Script" path="res://scenes/magic_circle/base_smc/Idle.gd" id="4_6iohp"]
 
-[sub_resource type="Animation" id="Animation_iln3y"]
-resource_name = "tiggered"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:modulate")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_wecsx"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -36,16 +20,47 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_iln3y"]
+resource_name = "tiggered"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"deferred_queue_free"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1ne31"]
 _data = {
 "RESET": SubResource("Animation_wecsx"),
-"tiggered": SubResource("Animation_iln3y")
+"triggered": SubResource("Animation_iln3y")
 }
 
 [node name="BaseSmc" type="Area2D"]
 script = ExtResource("1_heqty")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+speed_scale = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

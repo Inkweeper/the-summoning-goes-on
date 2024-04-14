@@ -5,9 +5,13 @@ signal player_dying
 signal player_teleported
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var eat_se: AudioStreamPlayer2D = $EatSE
 
-@export var acc:float = 800
-@export var friction:float = 500
+
+
+@export var acc:float = 1200
+@export var friction:float = 700
 @export var air_friction_para:float=0.01
 
 func _ready() -> void:
@@ -19,6 +23,10 @@ func move(delta:float,v_para:float) -> void:
 	velocity = velocity.move_toward(Vector2.ZERO,(friction+air_friction_para*pow(velocity.length(),2))*delta)
 	move_and_slide()
 
+func eat():
+	eat_se.play()
+	pass
+
 func handle_animation():
 	if velocity.x>0:
 		animated_sprite_2d.flip_h=false
@@ -28,7 +36,9 @@ func handle_animation():
 
 func starved_to_death():
 	player_dying.emit()
+	collision_shape_2d.disabled=true
 
 func teleported():
 	player_teleported.emit()
+	collision_shape_2d.disabled=true
 

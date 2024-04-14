@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2da3dcqi23c3"]
+
+[ext_resource type="PackedScene" uid="uid://b6l3raqebbco3" path="res://scenes/offering/base_offering/base_offering.tscn" id="1_famvk"]
+[ext_resource type="Texture2D" uid="uid://ch3g6rtbx0y84" path="res://aspws/offering/offerings.png" id="2_l2pxr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hli2"]
+atlas = ExtResource("2_l2pxr")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lxsxf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hli2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8hsp0"]
+
+[node name="Burger" instance=ExtResource("1_famvk")]
+offering_type_name = "burger"
+satiety_recovery = 10.0
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_lxsxf")
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_8hsp0")
+
+[node name="CPUParticles2D" parent="." index="3"]
+color = Color(1, 0.745098, 0, 1)
+hue_variation_max = 0.1
