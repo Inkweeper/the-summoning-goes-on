@@ -25,6 +25,7 @@ atlas = ExtResource("2_bsjli")
 region = Rect2(160, 0, 40, 40)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6ofm"]
+resource_local_to_scene = true
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -115,6 +116,7 @@ script = ExtResource("1_wi7im")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_q6ofm")
+animation = &"disappearing"
 autoplay = "default"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
